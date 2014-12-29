@@ -4,13 +4,28 @@
 	<meta charset="UTF-8">
 	<title>Distro Game</title>
 	<link rel="stylesheet" href="assets/css/style.css">
+
+	<script src="vendor/phaser.min.js"></script>
+	<script src="src/Boot.js"></script>
+	<script src="src/Preloader.js"></script>
+	<script src="src/MainMenu.js"></script>
+	<script src="src/Game.js"></script>
 </head>
 <body>
 	<div id="game"></div>
 	<footer>Powered by Radosław Kosiński <a href="http://rkosinski.pl" alt="rkosinski.pl" target="_blank">rkosinski.pl</a></footer>
 
-	<script src="vendor/phaser.min.js"></script>
-	<script src="src/boot.js"></script>
-	<script src="src/init.js"></script>
+
+
+	<script>
+		(function() {
+			var game = new Phaser.Game(440, 660, Phaser.AUTO, 'game');
+			game.state.add('Boot', Distro.Boot);
+			game.state.add('Preloader', Distro.Preloader);
+			game.state.add('MainMenu', Distro.MainMenu);
+			game.state.add('Game', Distro.Game);
+			game.state.start('Boot');
+		})();
+	</script>
 </body>
 </html>
