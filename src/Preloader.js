@@ -18,6 +18,8 @@ Distro.Preloader.prototype = {
         this.load.image('rockMedium', 'assets/img/rock-medium.png');
         this.load.image('rockSmall', 'assets/img/rock-small.png');
 
+
+
         // Load spritesheets
         this.load.spritesheet('startBtn', 'assets/img/btn-start.png', 151, 47);
         this.load.spritesheet('creditsBtn', 'assets/img/btn-credits.png', 151, 47);
