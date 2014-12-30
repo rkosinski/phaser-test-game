@@ -21,7 +21,8 @@ Distro.Game.prototype = {
     create: function () {
         // Background
         this.add.sprite(0, 0, 'background');
-
+        // Start phasers physics
+        this.physics.startSystem(Phaser.Physics.ARCADE);
         // Create rocks group
         this.rocks = this.add.group();
 
@@ -38,8 +39,8 @@ Distro.Game.prototype = {
             }
         }
 
-        this.physics.startSystem(Phaser.Physics.ARCADE);
-
+        // Set anchor point to every rock in stage
+        // And enable gravity on it
         for (var key in this.rocks.children) {
             this.rocks.children[key].anchor.set(0.5);
             this.physics.arcade.enable(this.rocks.children[key]);
@@ -48,6 +49,8 @@ Distro.Game.prototype = {
     update: function () {
         var tStep = Math.sin(counter);
 
+        // Gravity bounce rocks
+        // And rotate them
         for (var key in this.rocks.children) {
             this.rocks.children[key].body.y = this.rocks.children[key].body.y + tStep / 2;
             this.rocks.children[key].angle += 0.2;
