@@ -1,15 +1,17 @@
 Distro.Game = function (game) {
+    counter = 0;
+    step = Math.PI * 2 / 360;
     rocks = null;
     stagesRocks = {
         'firstStage': {
             'rockBig': [
-                [150, 120], [120, 180]
+                [50, 190], [280, 340]
             ],
             'rockMedium': [
-                [180, 330], [160, 420], [220, 370]
+                [180, 100], [370, 260], [120, 420]
             ],
             'rockSmall': [
-                [340, 190], [250, 280], [180, 190], [230, 550]
+                [340, 70], [65, 510], [200, 240], [330, 550]
             ]
         }
     }
@@ -25,12 +27,32 @@ Distro.Game.prototype = {
 
         // Add rocks to the group
         for (var key in stagesRocks.firstStage) {
-            for (var i = 0; i < stagesRocks.firstStage[key].length; i++) {
-                this.rocks.create(stagesRocks.firstStage[key][i][0], stagesRocks.firstStage[key][i][1] + 10, key);
+            if (key.match(/(rock){1}[a-zA-Z]*/)) {
+                for (var i = 0; i < stagesRocks.firstStage[key].length; i++) {
+                    this.rocks.create(
+                        stagesRocks.firstStage[key][i][0], 
+                        stagesRocks.firstStage[key][i][1],
+                        key
+                    );
+                }
             }
-            
+        }
+
+        this.physics.startSystem(Phaser.Physics.ARCADE);
+
+        for (var key in this.rocks.children) {
+            this.rocks.children[key].anchor.set(0.5);
+            this.physics.arcade.enable(this.rocks.children[key]);
         }
     },
-    update: function() {
-    }
+    update: function () {
+        var tStep = Math.sin(counter);
+
+        for (var key in this.rocks.children) {
+            this.rocks.children[key].body.y = this.rocks.children[key].body.y + tStep / 2;
+            this.rocks.children[key].angle += 0.2;
+        }
+
+        counter += step;
+    },
 };
